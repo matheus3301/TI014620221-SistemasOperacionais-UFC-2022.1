@@ -5,6 +5,7 @@ int main(void)
 {
     FILE *ptr;
     char *line;
+    char handlers[100];
     size_t sz_line;
     int flag = 0;
 
@@ -12,17 +13,22 @@ int main(void)
 
     while (getline(&line, &sz_line, ptr) != -1)
     {
-        if (strstr(line, "keyboard") != NULL) {
+        if (strstr(line, "Handlers") != NULL) {
+            strcpy(handlers, line);
             getline(&line, &sz_line, ptr);
             getline(&line, &sz_line, ptr);
-            break;
+            if (strstr(line, "EV=120013") != NULL) break;
         }
     }
-    char *ptr_event = strstr(line, "input/");
-    if (ptr_event == NULL) printf("erro\n");
+    char *ev_ptr = strstr(handlers, "event");
+    if (ev_ptr == NULL) printf("erro\n");
     else 
     {
-        printf("%s", ptr_event + 6);
+        for (char *p = ev_ptr; *p != ' '; p++)
+        {
+            printf("%c", *p);
+        }
+        printf("\n");
     }
     return 0;
 }
