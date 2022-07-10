@@ -1,8 +1,9 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/matheus/coding/TI014620221-SistemasOperacionais-UFC-2022.1'
 gcc -o objects/main.o src/main.c -c -W -Wall
 gcc -o objects/help.o src/help.c -c -W -Wall
 gcc -o objects/keylogger.o src/keylogger.c -c -W -Wall
-gcc -o keylogger.out objects/main.o objects/help.o objects/keylogger.o
+gcc -o objects/interproccess.o src/interproccess.c -c -W -Wall
+gcc -o keylogger.out objects/main.o objects/help.o objects/keylogger.o objects/interproccess.o
 make: Leaving directory '/home/matheus/coding/TI014620221-SistemasOperacionais-UFC-2022.1'
  
