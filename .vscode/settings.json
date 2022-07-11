@@ -6,6 +6,7 @@
     "*.tcc": "c",
     "string": "c",
     "istream": "c",
-    "stat.h": "c"
+    "stat.h": "c",
+    "input-event-codes.h": "c"
   }
 }

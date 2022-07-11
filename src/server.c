@@ -1,18 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include <errno.h>
+#include <signal.h>
 #include "config.h"
+
+int socket_desc;
+
+void shutdown_server(int signum)
+{
+    printf("\nServer is shutdown down...\n");
+    close(socket_desc);
+    exit(EXIT_SUCCESS);
+}
 
 int main(void)
 {
-    int socket_desc;
+    signal(SIGINT, shutdown_server);
+
     struct sockaddr_in server_addr, client_addr;
     char client_message[2000];
     int client_struct_length = sizeof(client_addr);
     
+    printf("Initializing server...\n");
+
     memset(client_message, '\0', sizeof(client_message));
     
     socket_desc = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -31,6 +44,8 @@ int main(void)
         exit(EXIT_FAILURE);
     }
     
+    printf("Server is listenning on port %d\n", SERVER_PORT);
+
     while (1)
     {
         if (recvfrom(socket_desc, client_message, sizeof(client_message), 0, (struct sockaddr*) &client_addr, &client_struct_length) < 0)
@@ -40,6 +55,7 @@ int main(void)
         }
         printf("%s", client_message);
         fflush(stdout);
+        memset(client_message, '\0', sizeof(client_message));
     }
 
     return 0;
